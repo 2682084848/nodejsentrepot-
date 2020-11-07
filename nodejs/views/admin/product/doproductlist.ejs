@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+
+<body>
+	<link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" href="/css/basic.css">
+	<%- include("../component/header.ejs")%>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-2">
+				<%- include("../component/aside.ejs")%>
+
+			</div>
+			<div class="col-sm-10">
+				<ol class="breadcrumb">
+					<li class="active">用户管理
+					</li>
+					<li class="active">用户列表
+					</li>
+				</ol>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						搜索
+					</div>
+					<div class="panel-body">
+						<form role="form" action="/admin/doproductlist" class="form-inline">
+							<div class="form-group">
+								<label for="name">名称</label>
+								<input type="text" name="title" class="form-control" id="name" placeholder="请输入名称">
+							</div>
+							<div class="form-group">
+								<label for="name">价格</label>
+								<input type="text" name="price1" class="form-control" id="name" placeholder="最小价格">
+							</div>
+							<div class="form-group">
+								<label for="name">价格</label>
+								<input type="text" name="price2" class="form-control" id="name" placeholder="最大价格">
+							</div>
+
+							<div class="form-group">
+								<button type="submit" class="btn btn-default">开始搜索</button>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!--
+                列表展示
+            -->
+				<div class="table-responsive">
+					<table class="table table-striped ">
+						<thead>
+							<tr>
+								<th>编号</th>
+								<th>上品名</th>
+								<th>图片</th>
+								<th>价格</th>
+								<th>邮费</th>
+								<th class="text-center">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<%for(var i=0;i<lists.length;i++){%>
+							<tr>
+								<td><%i+1%></td>
+								<td><%=lists[i].title%></td>
+								<td>
+									<img src="<%=lists[i].pic%>" style="width: 100px;" alt="">
+								</td>
+								<td><%=lists[i].price%></td>
+								<td><%=lists[i].goods_id%></td>
+
+								<td class="text-center">
+									<a href="/admin/productedit?id=<%=lists[i]._id%>" class="btn btn-primary">修改</a>
+									<a href="/admin/productdel?id=<%=lists[i]._id%>" class="btn btn-danger">删除</a>
+								</td>
+							</tr>
+						<%}%>
+						</tbody>
+					</table>
+					<div>
+						<ul class="pagination">
+							<li><a href="">总共<span><%=total%></span>条数据</a></li>
+							<li><a href="/admin/productlist?page=1">首页</a></li>
+							<li class="<%=page==1?'disabled':''%>"><a
+									href="/admin/productlist?page=<%=page-1%>">上一页</a>
+							</li>
+
+							<%for(var i=1;i<=totalPage;i++){%>
+							<li class="<%=page==i?'active':''%>"><a href="/admin/productlist?page=<%=i%>"><%=i%></a>
+							</li>
+							<%}%>
+							<li class="<%=page==totalPage?'disabled':''%>"><a
+								href="/admin/productlist?page=<%=page=page<totalPage?page+1:totalPage%>">下一页</a></li>
+							<li><a href="/admin/productlist?page=<%=totalPage%>">尾页</a></li>
+						</ul>
+					
+						
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>
